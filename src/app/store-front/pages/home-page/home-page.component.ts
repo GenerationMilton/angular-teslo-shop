@@ -1,5 +1,6 @@
+
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ProductCardComponent } from "../../../product/components/product-card/product-card.component";
+//import { ProductCardComponent } from "../../../product/components/product-card/product-card.component";
 
 @Component({
   selector: 'app-home-page',
