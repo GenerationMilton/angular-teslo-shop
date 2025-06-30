@@ -1,17 +1,17 @@
-const { default: daisyui } = require("daisyui");
-const { plugin } = require("postcss");
-
-module.exports ={
+module.exports = {
     content: [
         "./src/**/*.{html,ts}",
     ],
-    theme:{
-        extend:{},
+    theme: {
+         fontFamily:{
+            'montserrat': ['Montserrat', 'sans-serif']
+        },
+        extend: {},
     },
-    plugins:[
-        require('daisyui'),
+    plugings: [
+        require( 'daisyui' ),
     ],
     daisyui: {
-        themes: ['night']
-    }
+        themes: [ 'night']
+    },
 }
