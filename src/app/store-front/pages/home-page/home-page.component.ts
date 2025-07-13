@@ -16,12 +16,9 @@ export class HomePageComponent {
   productsService = inject(ProductsService);
 
   productsResource= rxResource({
-    request:()=>({ }),
-    loader:({ request })=>{
-      return this.productsService.getProducts({
-        limit:5,
-        gender: 'women',
-      });
+    params:()=>({}),
+    stream:({ params })=>{
+      return this.productsService.getProducts({});
     }    
   })
 
