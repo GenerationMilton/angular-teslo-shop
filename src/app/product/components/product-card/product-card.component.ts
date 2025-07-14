@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Product } from '../../interfaces/product.interface';
 import { SlicePipe } from '@angular/common';
+import { ProductImagePipe } from '../../pipes/product-image.pipe';
 
 @Component({
   selector: 'product-card',
-  imports: [RouterLink, RouterLinkActive, SlicePipe],
+  imports: [RouterLink, RouterLinkActive, SlicePipe, ProductImagePipe],
   templateUrl: './product-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

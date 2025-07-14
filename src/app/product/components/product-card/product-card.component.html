@@ -2,7 +2,7 @@
 <div class="card bg-base-100 shadow-xl animate-fadeIn">
   <figure class="px-10 pt-10">
     <img
-      [src]="imageUrl()"
+      [src]=" product().images | productImage"
       [alt]="product().title"]
       class="rounded-xl" 
       />
