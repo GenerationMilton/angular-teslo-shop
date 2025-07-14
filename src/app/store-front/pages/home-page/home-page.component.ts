@@ -1,5 +1,5 @@
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, linkedSignal, signal } from '@angular/core';
 import { ProductCardComponent } from 'src/app/product/components/product-card/product-card.component';
 import { ProductsService } from 'src/app/product/services/products.service';
 //import { ProductCardComponent } from "../../../product/components/product-card/product-card.component";
@@ -11,15 +11,13 @@ import { rxResource } from '@angular/core/rxjs-interop';
   templateUrl: './home-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent { 
-
+export class HomePageComponent {
   productsService = inject(ProductsService);
 
-  productsResource= rxResource({
-    params:()=>({}),
-    stream:({ params })=>{
+  productsResource = rxResource({
+    params: () => ({}),
+    stream: ({ params }) => {
       return this.productsService.getProducts({});
-    }    
-  })
-
+    },
+  });
 }
