@@ -4,10 +4,11 @@ import { ProductCardComponent } from 'src/app/product/components/product-card/pr
 import { ProductsService } from 'src/app/product/services/products.service';
 //import { ProductCardComponent } from "../../../product/components/product-card/product-card.component";
 import { rxResource } from '@angular/core/rxjs-interop';
+import { PaginationComponent } from "@shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-home-page',
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, PaginationComponent],
   templateUrl: './home-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
