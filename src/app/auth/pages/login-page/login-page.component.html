@@ -1,0 +1,63 @@
+<form class="flex flex-col gap-2">
+
+    <label class="input validator">
+  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <g
+      stroke-linejoin="round"
+      stroke-linecap="round"
+      stroke-width="2.5"
+      fill="none"
+      stroke="currentColor"
+    >
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </g>
+  </svg>
+  <input
+    type="text"
+    class="grow"
+    placeholder="Email"
+   
+  />
+</label>
+<p class="validator-hint">
+  Must be 3 to 30 characters
+  <br />containing only letters, numbers or dash
+</p>
+
+
+<label class="input validator">
+  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <g
+      stroke-linejoin="round"
+      stroke-linecap="round"
+      stroke-width="2.5"
+      fill="none"
+      stroke="currentColor"
+    >
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </g>
+  </svg>
+  <input
+    type="password"
+    class="grow"
+    value="password"
+    
+  />
+</label>
+<p class="validator-hint">
+  Must be 3 to 30 characters
+  <br />containing only letters, numbers or dash
+</p>
+
+<button type="submit" class="btn btn-secondary">Login</button>
+
+<p class="text-slate-700">
+¿No tienes cuenta?
+<a routerLink="/auth/register" class="text-secondary">Crea una aquí</a>
+</p>
+
+</form>
+
+
