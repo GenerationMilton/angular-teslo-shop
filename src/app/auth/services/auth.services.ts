@@ -19,7 +19,7 @@ export class AuthService {
 
   //llamar check status cuando se injecte el httpClient con la primera peticion
   checkStatusResource = rxResource({
-    stream: ()=> this.checkStatus()
+    stream: () => this.checkStatus(),
   });
 
   authStatus = computed<AuthStatus>(() => {
@@ -42,27 +42,16 @@ export class AuthService {
         password: password,
       })
       .pipe(
-        tap((resp) => {
-          this._user.set(resp.user);
-          this._authStatus.set('authenticated');
-          this._token.set(resp.token);
-
-          localStorage.setItem('token', resp.token);
-        }),
-        map(() => true),
-        catchError((error: any) => {
-          this._user.set(null);
-          this._token.set(null);
-          this._authStatus.set('not-authenticated');
-          return of(false);
-        })
+        map((resp) => this.handleAuthSuccess(resp) ),
+        catchError((error: any) => this.handleAuthError(error))
       );
   }
 
   //metodo para el check status
   checkStatus(): Observable<boolean> {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (!token) {
+      this.logout();
       return of(false);
     }
 
@@ -73,20 +62,31 @@ export class AuthService {
         },
       })
       .pipe(
-        tap((resp) => {
-          this._user.set(resp.user);
-          this._authStatus.set('authenticated');
-          this._token.set(resp.token);
-
-          localStorage.setItem('token', resp.token);
-        }),
-        map(() => true),
-        catchError((error: any) => {
-          this._user.set(null);
-          this._token.set(null);
-          this._authStatus.set('not-authenticated');
-          return of(false);
-        })
+        map((resp) => this.handleAuthSuccess(resp) ),
+        catchError((error: any) => this.handleAuthError(error))
       );
+  }
+
+  logout() {
+    this._user.set(null);
+    this._token.set(null);
+    this._authStatus.set('not-authenticated');
+
+    localStorage.removeItem('token');
+  }
+
+  private handleAuthSuccess({ token, user}: AuthResponse) {
+    this._user.set(user);
+    this._authStatus.set('authenticated');
+    this._token.set(token);
+
+    localStorage.setItem('token', token);
+
+    return true;
+  }
+
+  private handleAuthError(error: any){
+    this.logout();
+    return of(false);
   }
 }
