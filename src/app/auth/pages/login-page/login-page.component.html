@@ -1,57 +1,80 @@
-<form class="flex flex-col gap-2">
+<form class="flex flex-col gap-2"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+>
 
-    <label class="input validator">
-  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2.5"
-      fill="none"
-      stroke="currentColor"
-    >
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </g>
+
+    <label class="input input-bordered flex items-center gap-2">
+  <svg 
+    class="h-[1em] opacity-50" 
+    xmlns="http://www.w3.org/2000/svg" 
+    fill="currentColor"
+    viewBox="0 0 16 16">
+    
+    <path 
+    fill-rule="evenodd"   
+    d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+    clip-rule="evenood"
+    ></path>
+      
+    
   </svg>
   <input
     type="text"
     class="grow"
-    placeholder="Email"
+    placeholder="Correo electrónico"
+    formControlName="email"
    
   />
 </label>
-<p class="validator-hint">
-  Must be 3 to 30 characters
-  <br />containing only letters, numbers or dash
-</p>
 
 
-<label class="input validator">
-  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2.5"
-      fill="none"
-      stroke="currentColor"
+<label class="input input-bordered flex items-center gap-2">
+  <svg 
+    class="h-[1em] opacity-50" 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 16 16"
+    class="h-4 w-4 opacity-70"
     >
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </g>
+    
+    <path
+    fill-rule="evenodd"     
+    d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+    clip-rule="evenood"
+    ></path>
+    
+
   </svg>
   <input
     type="password"
     class="grow"
     value="password"
-    
+    placeholder="Contraseña"
+    formControlName="password"
   />
 </label>
-<p class="validator-hint">
-  Must be 3 to 30 characters
-  <br />containing only letters, numbers or dash
-</p>
+
 
 <button type="submit" class="btn btn-secondary">Login</button>
+
+@if(hasError()){
+<div role="alert" class="alert alert-error animate-fadeIn bottom-5 right-5 w-52">
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    class="h-6 w-6 shrink-0 stroke-current" 
+    fill="none" 
+    viewBox="0 0 24 24">
+    <path 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+  <span>Por favor revise la información ingresada</span>
+</div>
+}
+
+
+
 
 <p class="text-slate-700">
 ¿No tienes cuenta?
