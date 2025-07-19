@@ -56,6 +56,7 @@ export class AuthService {
       this.logout();
       return of(false);
     }
+    
 
     return this.http
       .get<AuthResponse>(`${baseUrl}/auth/check-status`, {
