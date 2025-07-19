@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@auth/services/auth.services';
 
 @Component({
@@ -15,6 +15,7 @@ export class LoginPageComponent {
   isPosting = signal(false);
 
   authService = inject(AuthService);
+  router = inject(Router);
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -32,10 +33,25 @@ export class LoginPageComponent {
 
     const { email= '', password=''} = this.loginForm.value;
 
-    this.authService.login(email!,password!).subscribe((resp)=>{
-      console.log(resp);
+    this.authService.login(email!,password!).subscribe((isAuthenticated)=>{
+      if(isAuthenticated){
+        this.router.navigateByUrl('/');
+        return;
+      }
+      this.hasError.set(true);
+      setTimeout(()=>{
+        this.hasError.set(false);
+      }, 2000);
     })
     console.log({ email, password });
   
   }
+
+  // Check Authentication
+
+
+  //Registro
+
+
+  //Logout
 }
