@@ -9,5 +9,5 @@
 
 @if (productResource.hasValue()) {
     <!-- product -->
-     <h1>{{ productResource.value()?.title }}</h1>
+     <product-details [product]="productResource.value()! "></product-details>
 }
