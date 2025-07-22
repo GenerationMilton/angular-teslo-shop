@@ -69,4 +69,8 @@ export class ProductsService {
       .get<Product>(`$${baseUrl}/products/${id}`)
       .pipe(tap((product)=> this.productCache.set(id, product)));
   }
+
+  updateProduct(productLike: Partial<Product>){
+    console.log('Actualizando product');
+  }
 }

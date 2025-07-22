@@ -4,6 +4,7 @@ import { FormUtils } from '@utils/form-utils';
 import { Product } from 'src/app/product/interfaces/product.interface';
 import { ProductCarouselComponent } from "src/app/product/product-carousel/product-carousel.component";
 import { FormErrorLabelComponent } from "@shared/components/pagination/form-error-label/form-error-label.component";
+import { ProductsService } from 'src/app/product/services/products.service';
 
 @Component({
   selector: 'product-details',
@@ -15,6 +16,9 @@ export class ProductDetailsComponent implements OnInit {
 
 
   product = input.required<Product>();
+
+  //injection service
+  productService = inject(ProductsService);
 
   //reactive form
   fb = inject(FormBuilder);
@@ -64,7 +68,23 @@ export class ProductDetailsComponent implements OnInit {
   onSubmit() {
     const isValid= this.productForm.valid;
 
-    console.log(this.productForm.value,{isValid});
+    this.productForm.markAllAsTouched();
+
+    if(!isValid) return;
+
+    const formValue = this.productForm.value;
+
+    const productLike: Partial<Product> = {
+      ...(formValue as any),
+      tags:
+      formValue.tags
+        ?.toLowerCase()
+        .split(',')
+        .map((tags)=> tags.trim()) ?? [],
+    };
+
+
+    this.productService.updateProduct(productLike);
   } 
 
 }
