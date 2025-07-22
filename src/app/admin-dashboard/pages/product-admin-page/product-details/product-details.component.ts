@@ -3,10 +3,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormUtils } from '@utils/form-utils';
 import { Product } from 'src/app/product/interfaces/product.interface';
 import { ProductCarouselComponent } from "src/app/product/product-carousel/product-carousel.component";
+import { FormErrorLabelComponent } from "@shared/components/pagination/form-error-label/form-error-label.component";
 
 @Component({
   selector: 'product-details',
-  imports: [ProductCarouselComponent, ReactiveFormsModule],
+  imports: [ProductCarouselComponent, ReactiveFormsModule, FormErrorLabelComponent],
   templateUrl: './product-details.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -61,7 +62,9 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.productForm.value);
+    const isValid= this.productForm.valid;
+
+    console.log(this.productForm.value,{isValid});
   } 
 
 }
