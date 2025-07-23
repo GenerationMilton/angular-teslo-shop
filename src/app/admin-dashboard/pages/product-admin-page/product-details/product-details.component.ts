@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormUtils } from '@utils/form-utils';
 import { Product } from 'src/app/product/interfaces/product.interface';
@@ -6,6 +6,8 @@ import { ProductCarouselComponent } from "src/app/product/product-carousel/produ
 import { FormErrorLabelComponent } from "@shared/components/pagination/form-error-label/form-error-label.component";
 import { ProductsService } from 'src/app/product/services/products.service';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+//import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'product-details',
@@ -26,6 +28,9 @@ export class ProductDetailsComponent implements OnInit {
 
   //router para navegación
   router=inject(Router);
+
+  //signal to save products and show modal
+  wasSaved = signal(false);
 
   productForm= this.fb.group({
     title:['',Validators.required],
@@ -69,9 +74,8 @@ export class ProductDetailsComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  async onSubmit() {
     const isValid= this.productForm.valid;
-
     this.productForm.markAllAsTouched();
 
     if(!isValid) return;
@@ -87,25 +91,29 @@ export class ProductDetailsComponent implements OnInit {
         .map((tags)=> tags.trim()) ?? [],
     };
 
-
     if(this.product().id === 'new'){
-      //crear producto
-      this.productService.createProduct(productLike).subscribe(product =>{
-        console.log('Producto creado');
-        this.router.navigate(['/admin/products', product.id]);
+      //crear producto //firstvalue from recibe un observable y recibe una promesa
+      const product = await firstValueFrom(
+        this.productService.createProduct(productLike)
 
-      })
+      );
+      console.log('Producto creado');
+      this.router.navigate(['/admin/products', product.id]);
+      
     } else {
-
-      this.productService.updateProduct(this.product().id, productLike).subscribe(
-      producto =>{
-        console.log('Producto actualizado');
-      }
-    )
+      const product = await firstValueFrom(
+        this.productService.updateProduct(this.product().id, productLike)
+      )
 
     }
 
-    
+    //timeout to remove the modal
+    this.wasSaved.set(true);
+    setTimeout(()=>{
+      this.wasSaved.set(false);
+    }, 3000);
   } 
+
+
 
 }
