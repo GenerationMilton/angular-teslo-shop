@@ -5,6 +5,7 @@ import { Product } from 'src/app/product/interfaces/product.interface';
 import { ProductCarouselComponent } from "src/app/product/product-carousel/product-carousel.component";
 import { FormErrorLabelComponent } from "@shared/components/pagination/form-error-label/form-error-label.component";
 import { ProductsService } from 'src/app/product/services/products.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'product-details',
@@ -22,6 +23,9 @@ export class ProductDetailsComponent implements OnInit {
 
   //reactive form
   fb = inject(FormBuilder);
+
+  //router para navegación
+  router=inject(Router);
 
   productForm= this.fb.group({
     title:['',Validators.required],
@@ -84,11 +88,24 @@ export class ProductDetailsComponent implements OnInit {
     };
 
 
-    this.productService.updateProduct(this.product().id, productLike).subscribe(
+    if(this.product().id === 'new'){
+      //crear producto
+      this.productService.createProduct(productLike).subscribe(product =>{
+        console.log('Producto creado');
+        this.router.navigate(['/admin/products', product.id]);
+
+      })
+    } else {
+
+      this.productService.updateProduct(this.product().id, productLike).subscribe(
       producto =>{
         console.log('Producto actualizado');
       }
     )
+
+    }
+
+    
   } 
 
 }
