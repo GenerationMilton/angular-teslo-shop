@@ -107,7 +107,7 @@ export class ProductDetailsComponent implements OnInit {
     if(this.product().id === 'new'){
       //crear producto //firstvalue from recibe un observable y recibe una promesa
       const product = await firstValueFrom(
-        this.productService.createProduct(productLike)
+        this.productService.createProduct(productLike, this.imageFileList)
 
       );
       console.log('Producto creado');
@@ -115,7 +115,7 @@ export class ProductDetailsComponent implements OnInit {
       
     } else {
       const product = await firstValueFrom(
-        this.productService.updateProduct(this.product().id, productLike)
+        this.productService.updateProduct(this.product().id, productLike, this.imageFileList)
       )
 
     }
