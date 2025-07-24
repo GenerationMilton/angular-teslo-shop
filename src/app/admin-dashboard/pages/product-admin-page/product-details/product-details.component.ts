@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormUtils } from '@utils/form-utils';
 import { Product } from 'src/app/product/interfaces/product.interface';
@@ -35,8 +35,16 @@ export class ProductDetailsComponent implements OnInit {
 
   //temp images to show preview images
   imageFileList: FileList | undefined = undefined;
-  tempImages = signal<String[]>([]);
+  tempImages = signal<string[]>([]);
 
+  //Images to carousel
+  imagesToCarousel = computed(()=>{
+    const currentProductImages = [... this.product().images, ... this.tempImages()];
+    return currentProductImages;
+
+  })
+
+  
   productForm= this.fb.group({
     title:['',Validators.required],
     description: ['', Validators.required],
