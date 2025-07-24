@@ -1,8 +1,10 @@
 <h1 class="text-2xl font-bold">{{ product().title }}</h1>
 <div class="divider"></div>
 
-<form [formGroup]="productForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4"
-    (ngSubmit)="onSubmit()"
+<form
+  [formGroup]="productForm"
+  class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+  (ngSubmit)="onSubmit()"
 >
   <!-- Datos generales -->
   <div class="flex flex-col gap-2">
@@ -16,11 +18,11 @@
     />
     <form-error-label [control]="productForm.get('title')!"></form-error-label>
 
-    <input 
-      type="text" 
-      placeholder="Slug" 
+    <input
+      type="text"
+      placeholder="Slug"
       class="input input-bordered w-full"
-      formControlName="slug" 
+      formControlName="slug"
       [class.border-red-500]="productForm.get('slug')?.errors ?? false"
     />
     <form-error-label [control]="productForm.get('slug')!"></form-error-label>
@@ -33,38 +35,44 @@
       [class.border-red-500]="productForm.get('description')?.errors ?? false"
     ></textarea>
 
-    <form-error-label [control]="productForm.get('description')!"></form-error-label>
+    <form-error-label
+      [control]="productForm.get('description')!"
+    ></form-error-label>
 
     <h2 class="text-lg font-bold">Datos de venta</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
       <div>
-         <input
-        type="number"
-        placeholder="Precio"
-        class="input input-bordered w-full"
-        formControlName="price"
-        [class.border-red-500]="productForm.get('price')?.errors ?? false"
-       />
-        <form-error-label [control]="productForm.get('price')!"></form-error-label>
+        <input
+          type="number"
+          placeholder="Precio"
+          class="input input-bordered w-full"
+          formControlName="price"
+          [class.border-red-500]="productForm.get('price')?.errors ?? false"
+        />
+        <form-error-label
+          [control]="productForm.get('price')!"
+        ></form-error-label>
       </div>
-     
+
       <div>
         <input
-        type="number"
-        placeholder="Inventario"
-        class="input input-bordered w-full"
-        formControlName="stock"
-        [class.border-red-500]="productForm.get('stock')?.errors ?? false"
-    />
-    <form-error-label [control]="productForm.get('stock')!"></form-error-label>
+          type="number"
+          placeholder="Inventario"
+          class="input input-bordered w-full"
+          formControlName="stock"
+          [class.border-red-500]="productForm.get('stock')?.errors ?? false"
+        />
+        <form-error-label
+          [control]="productForm.get('stock')!"
+        ></form-error-label>
       </div>
     </div>
 
     <!-- tags -->
-    <input 
-      type="text" 
-      placeholder="Tags" 
+    <input
+      type="text"
+      placeholder="Tags"
       class="input input-bordered w-full"
       formControlName="tags"
       [class.border-red-500]="productForm.get('tags')?.errors ?? false"
@@ -74,26 +82,38 @@
     <!-- Botones para el género -->
     <div class="grid grid-cols-3 gap-2">
       <!-- <button class="btn btn-sm btn-outline">Masculino</button> -->
-      <button type="button" 
+      <button
+        type="button"
         class="btn btn-sm"
-        [class.btn-primary]="productForm.value.gender ==='men'"
-        (click)="productForm.patchValue({ gender: 'men'})"
-      >Masculino</button>
-      <button type="button" 
+        [class.btn-primary]="productForm.value.gender === 'men'"
+        (click)="productForm.patchValue({ gender: 'men' })"
+      >
+        Masculino
+      </button>
+      <button
+        type="button"
         class="btn btn-sm"
-        [class.btn-accent]="productForm.value.gender ==='women'"
-        (click)="productForm.patchValue({ gender: 'women'})"
-      >Femenino</button>
-      <button type="button" 
+        [class.btn-accent]="productForm.value.gender === 'women'"
+        (click)="productForm.patchValue({ gender: 'women' })"
+      >
+        Femenino
+      </button>
+      <button
+        type="button"
         class="btn btn-sm"
-        [class.btn-warning]="productForm.value.gender ==='kid'"
-        (click)="productForm.patchValue({ gender: 'kid'})"
-      >Kid</button>
-      <button type="button" 
+        [class.btn-warning]="productForm.value.gender === 'kid'"
+        (click)="productForm.patchValue({ gender: 'kid' })"
+      >
+        Kid
+      </button>
+      <button
+        type="button"
         class="btn btn-sm"
-        [class.btn-secondary]="productForm.value.gender==='unisex'"
-        (click)="productForm.patchValue({ gender: 'unisex'})"
-        >Unisex</button>
+        [class.btn-secondary]="productForm.value.gender === 'unisex'"
+        (click)="productForm.patchValue({ gender: 'unisex' })"
+      >
+        Unisex
+      </button>
     </div>
 
     <!-- <select class="select select-bordered w-full">
@@ -105,10 +125,14 @@
     <!-- Sizes -->
     <div class="grid grid-cols-6 gap-2">
       @for (size of sizes; track size) {
-      <button class="btn btn-sm btn-secondary" type="button"
-      (click)="onSizeClicked(size)"
-      [class.btn-secondary]="productForm.value.sizes?.includes(size)"
-      >{{ size }}</button>
+      <button
+        class="btn btn-sm btn-secondary"
+        type="button"
+        (click)="onSizeClicked(size)"
+        [class.btn-secondary]="productForm.value.sizes?.includes(size)"
+      >
+        {{ size }}
+      </button>
       }
     </div>
   </div>
@@ -125,7 +149,22 @@
 
     <product-carousel [images]="product().images" />
 
-    <input type="file" class="file-input file-input-bordered w-full mt-4" />
+    <input
+      type="file"
+      multiple
+      accept="image/*"
+      class="file-input file-input-bordered w-full mt-4"
+      (change)="onFilesChanged($event)"
+    />
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+      @for (image of tempImages(); track image) {
+      <img
+        [src]="image"
+        alt="Temporal image"
+        class="w-full object-cover rounded-xl"
+      />
+      }
+    </div>
   </div>
 </form>
 
@@ -134,4 +173,3 @@
   <span>Datos actualizados correctamente</span>
 </div>
 }
-

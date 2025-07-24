@@ -18,6 +18,7 @@ import { firstValueFrom } from 'rxjs';
 export class ProductDetailsComponent implements OnInit {
 
 
+
   product = input.required<Product>();
 
   //injection service
@@ -31,6 +32,10 @@ export class ProductDetailsComponent implements OnInit {
 
   //signal to save products and show modal
   wasSaved = signal(false);
+
+  //temp images to show preview images
+  imageFileList: FileList | undefined = undefined;
+  tempImages = signal<String[]>([]);
 
   productForm= this.fb.group({
     title:['',Validators.required],
@@ -113,6 +118,21 @@ export class ProductDetailsComponent implements OnInit {
       this.wasSaved.set(false);
     }, 3000);
   } 
+
+  //Images
+  onFilesChanged(event: Event) {
+  const fileList = (event.target as HTMLInputElement).files;
+  this.imageFileList = fileList ?? undefined;
+
+  this.tempImages.set([]);
+
+  const imageUrls = Array.from(fileList ?? []).map((file)=>
+  URL.createObjectURL(file)
+  );
+
+  this.tempImages.set(imageUrls)
+  
+}
 
 
 
