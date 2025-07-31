@@ -35,6 +35,8 @@ export class AuthService {
 
   token = computed<string | null>(this._token);
 
+  isAdmin = computed(()=> this._user()?.roles.includes('admin') ?? false);
+
   login(email: string, password: string): Observable<boolean> {
     return this.http
       .post<AuthResponse>(`${baseUrl}/auth/login`, {
@@ -54,6 +56,7 @@ export class AuthService {
       this.logout();
       return of(false);
     }
+    
 
     return this.http
       .get<AuthResponse>(`${baseUrl}/auth/check-status`, {
